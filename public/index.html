@@ -1,101 +1,14 @@
-<!--
-   
-   Copyright (c) 2017, the Perspective Authors.
-   
-   This file is part of the Perspective library, distributed under the terms of
-   the Apache License 2.0.  The full license can be found in the LICENSE file.
--->
-
 <!DOCTYPE html>
 <html>
 
 <head>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-
-<!--
-
-    <script src="https://unpkg.com/@jpmorganchase/perspective-viewer/build/perspective.view.js"></script>
-    <script src="https://unpkg.com/@jpmorganchase/perspective-viewer-hypergrid/build/hypergrid.plugin.js"></script>
-    <script src="https://unpkg.com/@jpmorganchase/perspective-viewer-highcharts/build/highcharts.plugin.js"></script> 
-
--->
-    <script src="perspective.view.js"></script>
-    <script src="hypergrid.plugin.js"></script>
-    <script src="highcharts.plugin.js"></script>
-    <script src="d3fc.plugin.js"></script> 
-
-    <link rel='stylesheet' href="material.dark.css" is="custom-style">
-    <!--<link rel="stylesheet" type="text/css" href="currentTheme.css">-->
-    <script src="//unpkg.com/babel-standalone@6/babel.min.js"></script>
-    
-    <style>
-    .example-chart {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-    </style>
-
-    <title>Perspective D3FC Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>perspective-d3fc-test examples</title>
 </head>
 
 <body>
-
-  <perspective-viewer class="example-chart"
-    view='d3_y_bar' 
-    row-pivots='["organisation"]' 
-    columns='["price"]' 
-  >
-  </perspective-viewer>
-
-  <script>
-
-    /*
-    var url = 'http://localhost:3000/data';
-    var el = document.getElementsByTagName('perspective-viewer')[0];
-    fetch(url).then(function(res){ return res.json();}).then(function(data) {
-      console.log(data);
-        el.load(data);
-        el._toggle_config();
-    });
-    var url1 = 'http://localhost:3000/staticStreamData';
-    var el1 = document.getElementsByTagName('perspective-viewer')[1];
-    fetch(url1).then(function(res){ return res.json();}).then(function(data) {
-      console.log(data);
-        el1.load(data);
-        el1._toggle_config();
-    });
-    */
-
-    (function(){
-      window.WebSocket = window.WebSocket || window.MozWebSocket;
-      var connection = new WebSocket('ws://127.0.0.1:1337');
-      connection.onopen = function () {
-      };
-
-      connection.onerror = function (error) {
-      };
-
-      var streamVis = document.getElementsByClassName('example-chart')[0];
-      //var table = perspective.worker().table({test: "integer"});
-      streamVis._toggle_config();
-      //streamVis.load(table);
-      connection.onmessage = function (message) {
-        try {
-          var json = JSON.parse(message.data);
-          streamVis.update(json);
-        } catch (e) {
-          console.log('This doesn\'t look like a valid JSON: ',
-              message.data);
-          return;
-        }
-      };
-
-    }());
-  </script>
+  <ul>
+    <li><a href="streaming.html">Streaming data example</a></li>
+  </ul>
 </body>
-
 </html>
