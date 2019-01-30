@@ -41,7 +41,7 @@
 
     <script>
         const psp = document.getElementById("perspective-viewer");
-        psp.toggleConfig();
+        psp.toggleConfig && psp.toggleConfig();
         fetch("large.csv")
             .then(res => res.text())
             .then(text => psp.load(text));
