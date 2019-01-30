@@ -1,0 +1,25 @@
+{
+  "name": "perspective-d3fc-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "build:theme": "lessc ../perspective/packages/perspective-viewer/src/themes/material.dark.less ./public/material.dark.css"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@jpmorganchase/perspective-viewer": "^0.2.12",
+    "@jpmorganchase/perspective-viewer-d3fc": "../perspective/packages/perspective-viewer-d3fc",
+    "@jpmorganchase/perspective-viewer-highcharts": "^0.2.12",
+    "@jpmorganchase/perspective-viewer-hypergrid": "^0.2.12",
+    "browser-sync": "^2.26.3",
+    "convert-csv-to-json": "0.0.13",
+    "csvtojson": "^2.0.8",
+    "express": "^4.16.4",
+    "less": "^3.9.0",
+    "websocket": "^1.0.28"
+  }
+}
