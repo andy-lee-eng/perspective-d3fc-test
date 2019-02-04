@@ -14,88 +14,90 @@
 <script src="../perspective.js"></script>
 
 <style>
-  body {
-    font: 10px sans-serif;
-  }
+    body {
+        font: 10px sans-serif;
+    }
 
-  #chart {
-    width: 100%;
-    height: 200px;
-    position: relative;
-  }
+    #chart {
+        width: 100%;
+        height: 200px;
+        position: relative;
+    }
 
-  #chartb {
-    width: 100%;
-    height: 200px;
-    position: relative;
-  }
+    #chartb {
+        width: 100%;
+        height: 200px;
+        position: relative;
+    }
 
-  #chartc {
-    width: 100%;
-    height: 200px;
-    position: relative;
-  }
+    #chartc {
+        width: 100%;
+        height: 200px;
+        position: relative;
+    }
 
-  #chart .legend {
-    position: absolute;
-    bottom: auto;
-    right: 0;
-    left: auto;
-    top: 0;
-    width: 170px;
-  }
+    #chart .legend {
+        position: absolute;
+        bottom: auto;
+        right: 0;
+        left: auto;
+        top: 0;
+        width: 170px;
+    }
 
-  #chart2 {
-    width: 100%;
-    height: 500px;
-    position: relative;
-  }
+    #chart2 {
+        width: 100%;
+        height: 500px;
+        position: relative;
+    }
 
-  #svg1 {
-    width: 100%;
-    height: 500px;
-    position: absolute;
-    bottom: auto;
-    right: 0;
-    left: auto;
-    top: 0;
-  }
-  
-  #svg2 {
-    width: 100%;
-    height: 500px;
-    position: absolute;
-    bottom: auto;
-    right: 0;
-    left: auto;
-    top: 0;
-  }
-  
-  #svg3 {
-    width: 100%;
-    height: 500px;
-    position: absolute;
-    bottom: auto;
-    right: 0;
-    left: auto;
-    top: 0;;
-  }
+    #svg1 {
+        width: 100%;
+        height: 500px;
+        position: absolute;
+        bottom: auto;
+        right: 0;
+        left: auto;
+        top: 0;
+    }
 
-  .x-axis .domain {
-    display: none;
-  }
+    #svg2 {
+        width: 100%;
+        height: 500px;
+        position: absolute;
+        bottom: auto;
+        right: 0;
+        left: auto;
+        top: 0;
+    }
+
+    #svg3 {
+        width: 100%;
+        height: 500px;
+        position: absolute;
+        bottom: auto;
+        right: 0;
+        left: auto;
+        top: 0;
+        ;
+    }
+
+    .x-axis .domain {
+        display: none;
+    }
 </style>
+
 <body>
-  
-<!-- <div id="chart"></div>
+
+    <!-- <div id="chart"></div>
 <div id="chartb"></div>
 <div id="chartc"></div> -->
-<svg id="svg1"></svg>
-<svg id="svg2"></svg>
-<svg id="svg3"></svg>
-<div id="chart2"></div>
+    <svg id="svg1"></svg>
+    <svg id="svg2"></svg>
+    <svg id="svg3"></svg>
+    <div id="chart2"></div>
 
-<script type='text/babel'>
+    <script type='text/babel'>
     const url = '../data/olympicWinnersVerySmall.json';
 
     
@@ -950,4 +952,4 @@ data = [{
     }
 
     main();
-</script>    
+</script>
