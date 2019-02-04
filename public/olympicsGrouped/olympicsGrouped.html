@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<!-- include polyfills for custom event, Symbol and Custom Elements -->
+<script src="//unpkg.com/babel-polyfill@6.26.0/dist/polyfill.js"></script>
+<script src="//unpkg.com/custom-event-polyfill@0.3.0/custom-event-polyfill.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/document-register-element/1.8.0/document-register-element.js"></script>
+
+<!-- use babel so that we can use arrow functions and other goodness in this block! -->
+<script src="//unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<script src="//unpkg.com/d3@5.5.0"></script>
+<script src="//unpkg.com/d3fc@14.0.1"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.18.0/d3-legend.min.js"></script>
+
+<script src="../perspective.js"></script>
+
+<style>
+  body {
+    font: 10px sans-serif;
+  }
+
+  #chart {
+    width: 100%;
+    height: 200px;
+    position: relative;
+  }
+
+  #chartb {
+    width: 100%;
+    height: 200px;
+    position: relative;
+  }
+
+  #chartc {
+    width: 100%;
+    height: 200px;
+    position: relative;
+  }
+
+  #chart .legend {
+    position: absolute;
+    bottom: auto;
+    right: 0;
+    left: auto;
+    top: 0;
+    width: 170px;
+  }
+
+  #chart2 {
+    width: 100%;
+    height: 500px;
+    position: relative;
+  }
+
+  #svg1 {
+    width: 100%;
+    height: 500px;
+    position: absolute;
+    bottom: auto;
+    right: 0;
+    left: auto;
+    top: 0;
+  }
+  
+  #svg2 {
+    width: 100%;
+    height: 500px;
+    position: absolute;
+    bottom: auto;
+    right: 0;
+    left: auto;
+    top: 0;
+  }
+  
+  #svg3 {
+    width: 100%;
+    height: 500px;
+    position: absolute;
+    bottom: auto;
+    right: 0;
+    left: auto;
+    top: 0;;
+  }
+
+  .x-axis .domain {
+    display: none;
+  }
+</style>
+<body>
+  
+<!-- <div id="chart"></div>
+<div id="chartb"></div>
+<div id="chartc"></div> -->
+<svg id="svg1"></svg>
+<svg id="svg2"></svg>
+<svg id="svg3"></svg>
+<div id="chart2"></div>
+
+<script type='text/babel'>
+    const url = '../data/olympicWinnersVerySmall.json';
+
+    
+    const sportsByCountryViewConfig = {
+        filter: [["sport", "in", ["Shooting","Diving"]],["year", ">=", 2008]],
+        row_pivot: ["sport","year"],
+        column_pivot: ["country"],
+        aggregate: [
+            { op: "sum", column: "gold" },      
+            { op: "sum", column: "silver" }, 
+            { op: "sum", column: "bronze" }      
+        ],
+        sort: []
+    };
+    
+    const medalsByYearViewConfig = {
+        row_pivot: ["year"],
+        column_pivot: [],
+        aggregate: [
+            { op: "sum", column: "gold" },      
+            { op: "sum", column: "silver" }, 
+            { op: "sum", column: "bronze" } 
+        ],
+        sort: []
+    };
+    
+    const splitBySportViewConfig = {
+        row_pivot: ["year"],
+        column_pivot: ["sport"],
+        aggregate: [
+            { op: "sum", column: "gold" }
+        ],
+        sort: []
+    }; 
+
+    const splitBySportViewConfigMC = {
+        row_pivot: ["year"],
+        column_pivot: ["sport"],
+        aggregate: [
+            { op: "sum", column: "gold" }
+        ],
+        sort: []
+    };
+    
+    function xhrSuccess() { 
+        this.callback.apply(this, this.arguments); 
+    }
+    
+    function xhrError() { 
+        console.error(this.statusText); 
+    }
+    
+    function showMessage(message) {
+        console.log(message + this.responseText);
+    }
+    
+    function loadFile(url, callback /*, opt_arg1, opt_arg2, ... */) {
+        var xhr = new XMLHttpRequest();
+        xhr.callback = callback;
+        xhr.arguments = Array.prototype.slice.call(arguments, 2);
+        xhr.onload = xhrSuccess;
+        xhr.onerror = xhrError;
+        xhr.open("GET", url, true);
+        xhr.send(null);
+    }
+    
+    const createGroupedChart = (jsonData, columnData, chartID) => {
+
+        const data = jsonData.filter(k => k.__ROW_PATH__ != "");
+
+        const color = d3.scaleOrdinal(d3.schemeCategory10); 
+    
+        const legend = d3.legendColor()
+            .orient('vertical')
+            .shape('circle')
+            .shapeRadius(6)
+            .scale(color);
+    
+        const yExtent = fc.extentLinear()
+        .accessors([(d) => d.map((e) => e[1])])
+        .include([0]);
+
+        const group = fc.group()
+        .key("__ROW_PATH__");
+        const dataset = group(data);
+        
+        console.log("dataset: ", dataset);
+        
+        const keys = dataset.map(d => d.key);
+
+        console.log("Groups keys: ", keys);
+
+        color.domain(keys);
+        
+        const crossValues = columnData.__ROW_PATH__.filter(k => k.length > 0);
+        
+        const groupedBar = fc.autoBandwidth(fc.seriesSvgGrouped(fc.seriesSvgBar()))
+            .crossValue(d => d[0])
+            .mainValue(d => d[1])
+            .align("left")
+            .decorate((sel, data, index) => {
+                sel.enter()
+                .select('path')
+                .attr('fill', color(keys[index]));
+            });
+
+        const svg = d3.select("svg");
+
+        const crossScale = d3.scaleBand().domain(crossValues).range(0,crossValues.length).paddingInner(0.4)
+                    .paddingOuter(0.2);
+
+        const chart = fc.chartSvgCartesian(
+                crossScale,
+                d3.scaleLinear()
+            )
+            .yDomain(yExtent(dataset))
+            // .yTickFormat(d3.format(".2s"))
+            .yOrient('left')
+            .plotArea(groupedBar)
+            .decorate((selection) => {
+                selection.enter()
+                .append('svg')
+                .attr('class', 'legend');
+
+                selection.select('.legend')
+                .append('g')
+                .attr('class', 'legendIcon')
+                .attr("transform", "translate(20,20)");
+
+                selection.select('.legendIcon')
+                .call(legend);
+            })
+            ;
+
+        d3.select(chartID)
+            .datum(dataset)
+            .call(chart);
+    }
+
+    const createStackedChart = (jsonData, columnData, chartID) => {
+        
+        var width = 500;
+        var height = 250;
+        var container = d3.select(chartID);
+
+        let data = [];
+        
+        const yExtent = fc.extentLinear()
+        .accessors([(d) => d.map((e) => e[1])])
+        .include([0]);
+
+        const cleanedJson = jsonData.filter(k => k.__ROW_PATH__ != "");
+
+        data = cleanedJson;
+
+        const stack = d3.stack()
+            .keys(Object.keys(data[0]).filter(k => k !== '__ROW_PATH__'));
+        let dataset = stack(data);
+
+        console.log("jsonData: ", data);
+
+        console.log("Stacked dataset: ", dataset);  
+        
+        // create scales
+        var x = d3.scalePoint()
+            .domain(data.map(d => d.__ROW_PATH__))
+            .range([0, width])
+            .padding(0.5);
+
+        var yExt = yExtent(dataset);
+
+        var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        var y = d3.scaleLinear()
+            .domain(yExt)
+            .range([height, 0]);
+
+        var barSeries = fc.seriesSvgBar()
+            .xScale(x)
+            .yScale(y)
+            .crossValue(d => d.data.__ROW_PATH__)
+            .mainValue(d => d[1])
+            .baseValue(d => d[0])
+            .decorate((group, data, index) => {
+                group.selectAll('path')
+                    .attr('fill', color(index));
+            });
+
+        var join = fc.dataJoin('g', 'dataset');
+
+        join(container, dataset)
+            .call(barSeries);  
+        
+        
+    }
+
+    const createStackedBars = (dataset, colIndex, chartID) => {
+        
+        var width = 800;
+        var height = 500;
+        var container = d3.select(chartID);
+
+        const yExtent = fc.extentLinear()
+        .accessors([(d) => d.map((e) => e[1])])
+        .include([0]);
+        
+        // let data = [];
+        
+        // const cleanedJson = jsonData.filter(k => k.__ROW_PATH__ != "");
+
+        // data = cleanedJson;
+
+        // const stack = d3.stack()
+        //     .keys(Object.keys(data[0]).filter(k => k !== '__ROW_PATH__'));
+        // let dataset = stack(data);
+
+        // console.log("jsonData: ", data);
+
+        console.log("Stacked dataset: ", dataset);  
+        
+        // create scales
+        var x = d3.scalePoint()
+            .domain(dataset[0].map(d => d.data.__ROW_PATH__))
+            .range([0, width])
+            .padding(0.5);
+
+        var yExt = yExtent(dataset);
+
+        var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        var y = d3.scaleLinear()
+            .domain(yExt)
+            .range([height, 0]);
+
+        var barSeries = fc.seriesSvgBar()
+            .xScale(x)
+            .yScale(y)
+            .crossValue(d => d.data.__ROW_PATH__)
+            .mainValue(d => d[1])
+            .baseValue(d => d[0])
+            .bandwidth(d => 25)
+            .decorate((group, data, index) => {
+                group.selectAll('path')
+                    .attr('fill', color(index))
+                    .attr('transform', `translate(${colIndex * 30}, 0)`);
+            });
+
+        var join = fc.dataJoin('g', 'dataset');
+
+        join(container, dataset)
+            .call(barSeries);  
+        
+        
+    }
+
+    const createStackedBars2 = (dataset, dataset2, colIndex, chartID) => {
+        
+        var width = 800;
+        var height = 500;
+        var container = d3.select(chartID); 
+
+        const yExtent = fc.extentLinear()
+        .accessors([(d) => d.map((e) => e[1])])
+        .include([0]);
+        
+        // let data = [];
+        
+        // const cleanedJson = jsonData.filter(k => k.__ROW_PATH__ != "");
+
+        // data = cleanedJson;
+
+        // const stack = d3.stack()
+        //     .keys(Object.keys(data[0]).filter(k => k !== '__ROW_PATH__'));
+        // let dataset = stack(data);
+
+        // console.log("jsonData: ", data);
+
+        console.log("Stacked dataset: ", dataset);  
+        
+        // create scales
+        var x = d3.scalePoint()
+            .domain(dataset[0].map(d => d.data.__ROW_PATH__))
+            .range([0, width])
+            .padding(0.5);
+
+        var yExt = yExtent(dataset);
+
+        var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        var y = d3.scaleLinear()
+            .domain(yExt)
+            .range([height, 0]);
+
+        var barSeries = fc.seriesSvgBar()
+            .xScale(x)
+            .yScale(y)
+            .crossValue(d => d.data.__ROW_PATH__)
+            .mainValue(d => d[1])
+            .baseValue(d => d[0])
+            .bandwidth(d => 25)
+            .decorate((group, data, index) => {
+                group.selectAll('path')
+                    .attr('fill', color(index))
+                    .attr('transform', `translate(${colIndex * 30}, 0)`);
+            });
+
+        var join = fc.dataJoin('g', 'dataset');
+
+        join(container, dataset)
+            .call(barSeries); 
+            
+        colIndex = 1;
+
+        // join(container, dataset2)
+        //     .call(barSeries);    
+        
+        container.append('g')
+            .datum(dataset2)
+            .call(barSeries);
+        
+    }
+
+    const createStackedGroupedChartArchive = (jsonData, columnData, chartID) => {
+        
+        const width = 500;
+        const height = 250;
+        const container = d3.select(chartID);
+
+        let data = [];
+        
+data = [{
+    'group': '2000',
+    'stack': 'gold',
+    'Gymnastics|gold': 2,
+    'Swimming|gold': 3
+}, {
+    'group': '2000',
+    'stack': 'silver',
+    'Gymnastics|silver': 3,
+    'Swimming|silver': 5
+}, {
+    'group': '2004',
+    'stack': 'gold',
+    'Gymnastics|gold': null,
+    'Swimming|gold': 8
+}, {
+    'group': '2004',
+    'stack': 'silver',
+    'Gymnastics|silver': 9,
+    'Swimming|silver': 2
+}, {
+    'group': '2008',
+    'stack': 'gold',
+    'Gymnastics|gold': null,
+    'Swimming|gold': 9
+}, {
+    'group': '2008',
+    'stack': 'silver',
+    'Gymnastics|silver': 2,
+    'Swimming|silver': 6
+}, {
+    'group': '2012',
+    'stack': 'gold',
+    'Gymnastics|gold': null,
+    'Swimming|gold': 14
+}, {
+    'group': '2012',
+    'stack': 'silver',
+    'Gymnastics|silver': 6,
+    'Swimming|silver': 1
+}, ];
+
+
+        const yExtent = fc.extentLinear()
+        .accessors([(d) => d.map((e) => e[1])])
+        .include([0]);
+
+        const cleanedJson = jsonData.filter(k => k.__ROW_PATH__ != "");
+
+        //data = cleanedJson;
+
+        const keys = data.reduce((a, v) => {            
+            Object.keys(v)
+                .filter(k => k !== 'group' && k !== 'stack')
+                .map(j => {
+                    !a.includes(j) && a.push(j);
+                });
+            return a;
+        }, []);
+
+        console.log("keys: ", keys);
+
+        const stack = d3.stack()
+            .keys(keys);
+        let dataset = stack(data);
+
+        console.log("jsonData: ", data);
+
+        console.log("Stacked dataset: ", dataset);  
+        
+        // create scales
+        const x = d3.scalePoint()
+            .domain(data.map(d => d.group))
+            .range([0, width])
+            .padding(0.5);
+
+        const yExt = yExtent(dataset);
+
+        const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        const y = d3.scaleLinear()
+            .domain(yExt)
+            .range([height, 0]);
+
+        const barSeries = fc.seriesSvgBar()
+            .xScale(x)
+            .yScale(y)
+            .crossValue(d => d.data.group)
+            .mainValue(d => d[1])
+            .baseValue(d => d[0])
+            .decorate((group, data, index) => {
+                group.selectAll('path')
+                    .attr('fill', color(index));
+            });
+
+        // const groupedBar = fc.autoBandwidth(fc.seriesSvgGrouped(fc.seriesSvgBar()))
+        //     .crossValue(d => d[0])
+        //     .mainValue(d => d[1])
+        //     .align("left")
+        //     .decorate((sel, data, index) => {
+        //         sel.enter()
+        //         .select('path')
+        //         .attr('fill', color(keys[index]));
+        //     });    
+
+        var join = fc.dataJoin('g', 'dataset');
+
+        join(container, dataset)
+            .call(barSeries);  
+        
+        
+    }
+
+    const createStackedChart2 = (jsonData, columnData, chartID) => {
+        
+        var width = 500;
+        var height = 250;
+        var container = d3.select(chartID);
+
+        let dataTemp = [];
+        
+        const yExtent = fc.extentLinear()
+        .accessors([(d) => d.map((e) => e[1])])
+        .include([0]);
+
+        const cleanedJson = jsonData.filter(k => k.__ROW_PATH__ != "");
+
+        dataTemp = cleanedJson;
+
+        const stack = d3.stack()
+            .keys(Object.keys(dataTemp[0]).filter(k => k !== '__ROW_PATH__'));
+        let dataset = stack(dataTemp);
+
+        console.log("jsonData: ", dataTemp);
+
+        console.log("createStackedChart2 - Stacked dataset: ", dataset);
+
+        const keys = dataset.map(d => d.key);
+        
+        const color = d3.scaleOrdinal(d3.schemeCategory10)
+            .domain(keys);
+        
+        console.log("Keys: ", keys);
+
+        // create scales
+        var x = d3.scaleBand()
+            .domain(dataTemp.map(d => d.__ROW_PATH__))
+            .range([0, width])
+            .padding(0.5);
+
+        var yExt = yExtent(dataset);
+
+        var y = d3.scaleLinear()
+            .domain(yExt)
+            .range([height, 0]);                     
+
+        const barSeries = fc.autoBandwidth(fc.seriesSvgBar())
+            .xScale(x)
+            .yScale(y)
+            .crossValue(d => d.data.__ROW_PATH__)
+            .orient('vertical')
+            .align('left')
+            .mainValue(d => d[1])
+            .baseValue(d => d[0]);
+
+        const multi = fc.seriesSvgMulti()
+            .mapping((data, index) => data[index])
+            .series(dataset.map(() => barSeries))
+            .decorate((selection) => {
+            selection.each((data, index, nodes) => {
+                d3.select(nodes[index])
+                .selectAll('g.bar')
+                .attr('fill', color(dataset[index].key));
+            });
+        });
+
+        const chart = fc.chartSvgCartesian(x, y)
+            .yDomain(yExtent(dataset))
+            .yOrient('left')
+            .plotArea(multi);   
+            
+        d3.select(chartID)
+            .datum(dataset)
+            .call(chart);   
+        
+    }
+
+    const createStackedChart3 = (dataset, idx, chartID) => {
+        
+        var width = 500;
+        var height = 250;
+        var container = d3.select(chartID);
+
+        const yExtent = fc.extentLinear()
+        .accessors([(d) => d.map((e) => e[1])])
+        .include([0]);
+
+        console.log("createStackedChart3 - Stacked dataset: ", dataset);
+
+        const keys = dataset.map(d => d.key);
+        
+        const color = d3.scaleOrdinal(d3.schemeCategory10)
+            .domain(keys);
+        
+        console.log("Keys: ", keys);
+
+        // create scales
+        var x = d3.scaleBand()
+            .domain(dataset[0].map(d => d.data.__ROW_PATH__))
+            .range([0, width])
+            .padding(0.5);
+
+        var yExt = yExtent(dataset);
+
+        var y = d3.scaleLinear()
+            .domain(yExt)
+            .range([height, 0]);                     
+
+        const barSeries = fc.seriesSvgBar()
+            .xScale(x)
+            .yScale(y)
+            .crossValue(d => d.data.__ROW_PATH__)
+            .orient('vertical')
+            .align('left')
+            .mainValue(d => d[1])
+            .baseValue(d => d[0])
+            // .decorate((selection) => {
+            // selection.each((data, index, nodes) => {
+            //     d3.select(nodes[index])
+            //     .selectAll('g.bar')
+            //     .attr('transform', 'translate(50, 0)');
+            // })
+            // ;
+
+        const multi = fc.seriesSvgMulti()
+            .mapping((data, index) => data[index])
+            .series(dataset.map(() => barSeries))
+            .decorate((selection) => {
+            selection.each((data, index, nodes) => {
+                d3.select(nodes[index])
+                .selectAll('g.bar')
+                .attr('fill', color(dataset[index].key));
+            });
+        });
+
+        const chart = fc.chartSvgCartesian(x, y)
+            .yDomain(yExtent(dataset))
+            .yOrient('left')
+            .plotArea(multi);   
+            
+        d3.select(chartID)
+            .datum(dataset)
+            .call(chart);   
+        
+    }
+
+    const createGroupedStackedChart = (dataArray, chartID) => {
+        
+        var width = 500;
+        var height = 250;
+        var container = d3.select(chartID);
+
+        let data = [];
+        
+        const yExtent = fc.extentLinear()
+        .accessors([(d) => d.map((e) => e[1])])
+        .include([0]);
+
+        console.log("dataArray domain: ", dataArray[0][0].map(d => d.data.__ROW_PATH__));
+
+        // create scales
+        var x = d3.scaleBand()
+            .domain(dataArray[0][0].map(d => d.data.__ROW_PATH__))
+            .range([0, width])
+            .padding(0.5);
+
+        var yExt = yExtent(dataArray[0]);
+
+        var y = d3.scaleLinear()
+            .domain(yExt)
+            .range([height, 0]);                     
+
+
+        let keys = [];
+        
+        const color = d3.scaleOrdinal(d3.schemeCategory10)
+            .domain(keys);
+        
+        console.log("Keys: ", keys);
+
+        const stacks = dataArray.map((dataset, i) => {
+            keys = keys.concat(dataset.map(d => d.key));
+
+            const barSeries = fc.seriesSvgBar()
+                .xScale(x)
+                .yScale(y)
+                .crossValue(d => d.data.__ROW_PATH__)
+                .orient('vertical')
+                .align('left')
+                .mainValue(d => d[1])
+                .baseValue(d => d[0]);
+
+            const multi = fc.seriesSvgMulti()
+                .mapping((data, index) => data[index])
+                .series(dataset.map(() => barSeries))
+                .decorate((selection) => {
+                selection.each((data, index, nodes) => {
+                    d3.select(nodes[index])
+                    .selectAll('g.bar')
+                    .attr('fill', color(dataset[index].key))
+                    ;
+                    //.attr("transform", `translate(${i * 20}, 0)`);
+                });
+            });
+
+            return multi;
+
+        });
+
+        const stacks2 =  fc.seriesSvgMulti(stacks);
+        
+
+        
+        // const barSeries = fc.autoBandwidth(fc.seriesSvgBar())
+        //     .xScale(x)
+        //     .yScale(y)
+        //     .crossValue(d => d.data.__ROW_PATH__)
+        //     .orient('vertical')
+        //     .align('left')
+        //     .mainValue(d => d[1])
+        //     .baseValue(d => d[0]);
+
+        // const multi = fc.seriesSvgMulti()
+        //     .mapping((data, index) => data[index])
+        //     .series(dataset.map(() => barSeries))
+        //     .decorate((selection) => {
+        //     selection.each((data, index, nodes) => {
+        //         d3.select(nodes[index])
+        //         .selectAll('g.bar')
+        //         .attr('fill', color(dataset[index].key));
+        //     });
+        // });
+
+        const chart = fc.chartSvgCartesian(x, y)
+            .yDomain(yExtent(dataArray[0]))
+            .yOrient('left')
+            .plotArea(stacks2);   
+            
+        d3.select(chartID)
+            .datum(dataArray[0])
+            .call(chart);   
+        
+    }
+
+    const asyncForEach = async (array, callback) => {
+        for (let index = 0; index < array.length; index++) {
+            await callback(array[index], index, array);
+        }
+    }
+
+    const processColumn = async (table, columnValue, viewConfig) => {
+        viewConfig.aggregate = [{"op": "sum", "column": columnValue}];
+
+        const dataView = await table.view(viewConfig);
+        const columnData = await dataView.to_columns();
+        const jsonData = await dataView.to_json();
+        const schema = await dataView.schema();
+        console.log(`View to columns [${columnValue}]: `, columnData);
+
+        console.log(`View to json: [${columnValue}]`, jsonData); 
+
+        console.log(`schema: [${columnValue}]`, schema); 
+
+        const columns = Object.keys(schema);
+        console.log(`columns:  [${columnValue}]`, columns);
+
+        const group = fc.group()
+            .key("__ROW_PATH__");
+        let dataset = group(jsonData.filter(k => k.__ROW_PATH__ != ""));
+
+        console.log("dataset Grouped: ", dataset); 
+
+        const stack = d3.stack()
+            .keys(Object.keys(jsonData[0]).filter(k => k !== '__ROW_PATH__'));
+        dataset = stack(jsonData.filter(k => k.__ROW_PATH__ != ""));
+
+        console.log("dataset Stacked: ", dataset); 
+
+        return dataset;
+    }
+
+    async function processFile () {
+        const dataFile = JSON.parse(this.responseText);
+
+        console.log("DataFile length: ", dataFile.length);
+
+        const table = perspective.worker().table(dataFile);
+
+        console.log("Table length: ", await table.size());
+
+        // const dataViewGrouped = table.view(medalsByYearViewConfig);
+        // const columnData = await dataViewGrouped.to_columns();
+        // const jsonData = await dataViewGrouped.to_json();
+        // console.log("View to columns: ", columnData);
+
+        // console.log("View to json: ", jsonData);
+
+        // createGroupedChart(jsonData, columnData, "#chart");
+
+        // const dataViewSplit = table.view(splitBySportViewConfig);
+        // const columnDataSplit = await dataViewSplit.to_columns();
+        // const jsonDataSplit = await dataViewSplit.to_json();
+        // console.log("View to columns [Stacked Data]: ", columnDataSplit);
+
+        // console.log("View to json: [Stacked Data]", jsonDataSplit);        
+        // createStackedChart2(jsonDataSplit, columnDataSplit, "#chart2");
+
+        const medals = ["gold", "silver", "bronze"];
+
+        const dataByCol = await Promise.all(medals.map(async (element) => {
+            return processColumn(table, element, splitBySportViewConfig)
+        }));    
+
+
+        console.log("dataByCol: ", dataByCol);
+        
+        //createGroupedStackedChart(dataByCol, "#chart");
+
+        // createStackedChart3(dataByCol[0], 0, "#chart");
+        // createStackedChart3(dataByCol[1], 1, "#chartb");
+        // createStackedChart3(dataByCol[2], 2, "#chartc");
+
+        //createGroupedStackedChart(dataByCol, "#chart");
+
+        createStackedBars(dataByCol[0],0,"#svg1");
+        createStackedBars(dataByCol[1],1,"#svg2");
+        createStackedBars(dataByCol[2],2,"#svg3");
+
+        // createStackedBars2(dataByCol[0], dataByCol[1], 0,"#svg1");
+
+
+    }
+    
+    const main = async () => {
+        console.log("Interrogate Olympic data");
+
+        
+        loadFile(url, processFile);        
+    }
+
+    main();
+</script>    
