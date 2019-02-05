@@ -652,25 +652,19 @@ data = [{
             .align('left')
             .mainValue(d => d[1])
             .baseValue(d => d[0])
-            // .decorate((selection) => {
-            // selection.each((data, index, nodes) => {
-            //     d3.select(nodes[index])
-            //     .selectAll('g.bar')
-            //     .attr('transform', 'translate(50, 0)');
-            // })
-            // ;
-
+            .bandwidth(d => 25)
+            
         const multi = fc.seriesSvgMulti()
             .mapping((data, index) => data[index])
             .series(dataset.map(() => barSeries))
             .decorate((selection) => {
-            selection.each((data, index, nodes) => {
-                d3.select(nodes[index])
-                .selectAll('g.bar')
-                .attr('fill', color(dataset[index].key));
-            });
-        });
-
+                selection.each((data, index, nodes) => {
+                    d3.select(nodes[index])
+                    .selectAll('g.bar')
+                    .attr('fill', color(dataset[index].key))
+                });
+            }); 
+            
         const chart = fc.chartSvgCartesian(x, y)
             .yDomain(yExtent(dataset))
             .yOrient('left')
@@ -678,7 +672,82 @@ data = [{
             
         d3.select(chartID)
             .datum(dataset)
-            .call(chart);   
+            .call(chart);                      
+        
+    }
+
+    const createStackedChart4 = (dataset, idx, chartID) => {
+        
+        var width = 500;
+        var height = 250;
+        var container = d3.select(chartID);
+
+        const yExtent = fc.extentLinear()
+        .accessors([(d) => d.map((e) => e[1])])
+        .include([0]);
+
+        console.log("createStackedChart3 - Stacked dataset: ", dataset);
+
+        const keys = dataset.map(d => d.key);
+        
+        const color = d3.scaleOrdinal(d3.schemeCategory10)
+            .domain(keys);
+        
+        console.log("Keys: ", keys);
+
+        // create scales
+        const x = d3.scaleBand()
+            .domain([2000, 2002, 2004, 2006, 2008, 2010, 2012])
+            .range([0, width])
+
+        const y = d3.scaleLinear()
+            .domain([0, 150])
+            .range([height, 0]); 
+
+
+        // // // create scales
+        // // var x = d3.scaleBand()
+        // //     .domain(dataset[0][0].map(d => d.data.__ROW_PATH__))
+        // //     .range([0, width])
+        // //     .padding(0.5);
+
+        // // var yExt = yExtent(dataset);
+
+        // // var y = d3.scaleLinear()
+        // //     .domain(yExt)
+        // //     .range([height, 0]);                     
+
+        // const barSeries = fc.seriesSvgBar()
+        //     .xScale(x)
+        //     .yScale(y)
+        //     .crossValue(d => d.data.__ROW_PATH__)
+        //     .orient('vertical')
+        //     .align('left')
+        //     .mainValue(d => d[1])
+        //     .baseValue(d => d[0])
+        //     .bandwidth(d => 25)
+            
+        // const multi = fc.seriesSvgMulti()
+        //     .mapping((data, index) => data[index])
+        //     .series(dataset[0].map(() => barSeries))
+        //     // .decorate((selection) => {
+        //     //     selection.each((data, index, nodes) => {
+        //     //         d3.select(nodes[index])
+        //     //         .selectAll('g.bar')
+        //     //         .attr('fill', color(dataset[index].key))
+        //     //     });
+        //     // });
+            
+        // const multiOuter = fc.seriesSvgMulti()
+        //     .mapping((data, index) => data[index])
+        //     .series(dataset.map(() => multi))              
+            
+        const chart = fc.chartSvgCartesian(x, y)
+            .yOrient('left');   
+            
+        d3.select(chartID)
+            .datum(dataset)
+            .call(chart);                      
         
     }
 
@@ -802,6 +871,8 @@ data = [{
         const columns = Object.keys(schema);
         console.log(`columns:  [${columnValue}]`, columns);
 
+        console.log(`dataView:  [${columnValue}]`, dataView);
+
         const group = fc.group()
             .key("__ROW_PATH__");
         let dataset = group(jsonData.filter(k => k.__ROW_PATH__ != ""));
@@ -854,15 +925,17 @@ data = [{
         
         //createGroupedStackedChart(dataByCol, "#chart");
 
-        // createStackedChart3(dataByCol[0], 0, "#chart");
+        //createStackedChart3(dataByCol[0], 0, "#chart2");
         // createStackedChart3(dataByCol[1], 1, "#chartb");
         // createStackedChart3(dataByCol[2], 2, "#chartc");
+
+        // createStackedChart4(dataByCol, 0, "#chart2");
 
         //createGroupedStackedChart(dataByCol, "#chart");
 
         createStackedBars(dataByCol[0],0,"#svg1");
-        createStackedBars(dataByCol[1],1,"#svg2");
-        createStackedBars(dataByCol[2],2,"#svg3");
+        // createStackedBars(dataByCol[1],1,"#svg2");
+        // createStackedBars(dataByCol[2],2,"#svg3");
 
         // createStackedBars2(dataByCol[0], dataByCol[1], 0,"#svg1");
 
