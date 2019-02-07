@@ -148,6 +148,8 @@ perspective-viewer {
   --highcharts-tooltip--background: #2a2c2f;
   --d3fc-legend-text: #bbbbbb;
   --d3fc-axis--ticks: #bbbbbb;
+  --d3fc-tooltip--background: #333333;
+  --d3fc-tooltip--color: #cfd8dc;
   --highcharts-heatmap-gradient-full: linear-gradient(#feeb65 0%, #e4521b 22.5%, #4d342f 42.5%, #222222 50%, #1a237e 57.5%, #42b3d5 67.5%, #dcedc8 100%);
   --highcharts-heatmap-gradient-positive: linear-gradient(#222222 0%, #1a237e 35%, #42b3d5 70%, #dcedc8 100%);
   --highcharts-heatmap-gradient-negative: linear-gradient(#feeb65 0%, #e4521b 35%, #4d342f 70%, #222222 100%);
