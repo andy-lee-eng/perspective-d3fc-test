@@ -3,7 +3,8 @@
 
 <head>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 
     <script src="../perspective.view.js"></script>
     <script src="../hypergrid.plugin.js"></script>
@@ -15,104 +16,44 @@
 
     <link rel='stylesheet' href="d3VSoriginal.css">
     <!-- <link rel='stylesheet' href="material.dark.css" is="custom-style">     -->
-    <link rel='stylesheet' href="../material.dark.css" is="custom-style"> 
+    <link rel='stylesheet' href="../material.dark.css" is="custom-style">
 </head>
 
 <body>
 
     <div id="container">
 
-        <perspective-viewer 
-            view="y_bar"
-            row-pivots='["country"]'
-            filters='[["gold",">",1]]' 
-            columns='["gold"]'
+        <perspective-viewer view="y_bar" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
             sort='[["gold","desc"]]'>
-    
+
         </perspective-viewer>
-        
-        <perspective-viewer 
-            view="d3_y_bar"
-            row-pivots='["country"]' 
-            filters='[["gold",">",1]]' 
-            columns='["gold"]'
+
+        <perspective-viewer view="d3_y_bar_2" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
             sort='[["gold","desc"]]'>
-    
-        </perspective-viewer>
-        
-        <perspective-viewer
-            view='y_bar'
-            row-pivots='["year"]' 
-            filters='[["country","==","United States"]]'
-            columns='["gold","silver","bronze"]'>
-    
-        </perspective-viewer>
-        
-        
-        <perspective-viewer
-            view='d3_y_bar'
-            row-pivots='["year"]' 
-            filters='[["country","==","United States"]]'
-            columns='["gold","silver","bronze"]'>
-    
-        </perspective-viewer>
-
-        <!-- <perspective-viewer
-        view='y_bar'
-        row-pivots='["year"]' 
-        filters='[["country","==","United States"]]'
-        columns='["gold","silver","bronze"]'>
 
         </perspective-viewer>
-    
-    
-        <perspective-viewer
-            view='d3_y_bar'
-            row-pivots='["year"]' 
-            filters='[["country","==","United States"]]'
-            columns='["gold","silver","bronze"]'>
 
-        </perspective-viewer> 
-
-            <perspective-viewer
-            view='y_bar'
-            row-pivots='["year","sport"]' 
-            column-pivots='["country"]'
-            filters='[["country","==","United States"],["year",">",2008]]'
+        <perspective-viewer view='y_bar' row-pivots='["year"]' filters='[["country","==","United States"]]'
             columns='["gold","silver","bronze"]'>
 
         </perspective-viewer>
-    
-    
-        <perspective-viewer
-            view='d3_y_bar'
-            row-pivots='["year","sport"]' 
-            column-pivots='["country"]'
-            filters='[["country","==","United States"],["year",">",2008]]'
+
+
+        <perspective-viewer view='d3_y_bar_2' row-pivots='["year"]' filters='[["country","==","United States"]]'
             columns='["gold","silver","bronze"]'>
 
         </perspective-viewer>
-    
-    -->
 
-        <perspective-viewer
-            view='y_bar'
-            row-pivots='["year"]' 
-            column-pivots='["sport"]'
-            filters='[["country","==","United States"],["year",">",2008]]'
-            columns='["gold"]'>
+        <perspective-viewer view='y_bar' row-pivots='["year"]' column-pivots='["sport"]'
+            filters='[["country","==","United States"],["year",">",2008]]' columns='["gold"]'>
 
         </perspective-viewer>
-        
-        <perspective-viewer
-            view='d3_y_bar'
-            row-pivots='["year"]' 
-            column-pivots='["sport"]'
-            filters='[["country","==","United States"],["year",">",2008]]'
-            columns='["gold"]'>
+
+        <perspective-viewer view='d3_y_bar_2' row-pivots='["year"]' column-pivots='["sport"]'
+            filters='[["country","==","United States"],["year",">",2008]]' columns='["gold"]'>
 
         </perspective-viewer>
-                
+
     </div>
 
 </body>
