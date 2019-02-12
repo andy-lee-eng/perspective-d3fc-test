@@ -23,12 +23,12 @@
 
     <div id="container">
 
-        <!-- <perspective-viewer view="d3_y_bar_2" row-pivots='["year","country"]'
-            filters='[["country","in",["United States","Great Britain"]]]' columns='["total"]' sort='["year"]'>
+        <perspective-viewer view='d3_y_line' row-pivots='["year"]' filters='[["country","==","United States"]]'
+            columns='["gold","silver","bronze"]'>
 
-        </perspective-viewer> -->
+        </perspective-viewer>
 
-        <perspective-viewer view='d3_y_bar_2' row-pivots='["year"]' filters='[["country","==","United States"]]'
+        <perspective-viewer view='y_line' row-pivots='["year"]' filters='[["country","==","United States"]]'
             columns='["gold","silver","bronze"]'>
 
         </perspective-viewer>

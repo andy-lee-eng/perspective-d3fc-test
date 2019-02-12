@@ -12,7 +12,8 @@
 
 <head>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 
     <script src="../perspective.view.js"></script>
     <script src="../hypergrid.plugin.js"></script>
@@ -25,27 +26,28 @@
 
     <style>
         .example-chart {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
     </style>
 </head>
 
 <body>
 
-    <perspective-viewer class="example-chart" view="d3_y_bar_2" row-pivots='["Sub-Category"]' sort='[["Profit", "desc"]]' columns='["Profit"]'>
+    <perspective-viewer class="example-chart" view="d3_y_bar" row-pivots='["Sub-Category"]' sort='[["Profit", "desc"]]'
+        columns='["Profit"]'>
 
     </perspective-viewer>
 
     <script>
-        window.addEventListener('WebComponentsReady', function() {
+        window.addEventListener('WebComponentsReady', function () {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '../data/superstore.arrow', true);
             xhr.responseType = "arraybuffer"
-            xhr.onload = function() {
+            xhr.onload = function () {
                 var el = document.getElementsByTagName('perspective-viewer')[0];
                 el.load(xhr.response);
                 el.toggleConfig();

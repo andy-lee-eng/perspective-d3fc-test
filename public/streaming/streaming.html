@@ -11,25 +11,26 @@
 
 <head>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 
-<!--
+  <!--
 
     <script src="https://unpkg.com/@jpmorganchase/perspective-viewer/build/perspective.view.js"></script>
     <script src="https://unpkg.com/@jpmorganchase/perspective-viewer-hypergrid/build/hypergrid.plugin.js"></script>
     <script src="https://unpkg.com/@jpmorganchase/perspective-viewer-highcharts/build/highcharts.plugin.js"></script> 
 
 -->
-    <script src="../perspective.view.js"></script>
-    <script src="../hypergrid.plugin.js"></script>
-    <script src="../highcharts.plugin.js"></script>
-    <script src="../d3fc.plugin.js"></script> 
+  <script src="../perspective.view.js"></script>
+  <script src="../hypergrid.plugin.js"></script>
+  <script src="../highcharts.plugin.js"></script>
+  <script src="../d3fc.plugin.js"></script>
 
-    <link rel='stylesheet' href="../material.dark.css" is="custom-style">
-    <!--<link rel="stylesheet" type="text/css" href="currentTheme.css">-->
-    <script src="//unpkg.com/babel-standalone@6/babel.min.js"></script>
-    
-    <style>
+  <link rel='stylesheet' href="../material.dark.css" is="custom-style">
+  <!--<link rel="stylesheet" type="text/css" href="currentTheme.css">-->
+  <script src="//unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <style>
     .example-chart {
       position: absolute;
       top: 0;
@@ -37,18 +38,14 @@
       right: 0;
       bottom: 0;
     }
-    </style>
+  </style>
 
-    <title>Perspective D3FC Test</title>
+  <title>Perspective D3FC Test</title>
 </head>
 
 <body>
 
-  <perspective-viewer class="example-chart"
-    view='d3_y_bar_2' 
-    row-pivots='["organisation"]' 
-    columns='["price"]' 
-  >
+  <perspective-viewer class="example-chart" view='d3_y_bar' row-pivots='["organisation"]' columns='["price"]'>
   </perspective-viewer>
 
   <script>
@@ -70,7 +67,7 @@
     });
     */
 
-    (function(){
+    (function () {
       window.WebSocket = window.WebSocket || window.MozWebSocket;
       var connection = new WebSocket('ws://127.0.0.1:1337');
       connection.onopen = function () {
@@ -89,7 +86,7 @@
           streamVis.update(json);
         } catch (e) {
           console.log('This doesn\'t look like a valid JSON: ',
-              message.data);
+            message.data);
           return;
         }
       };
