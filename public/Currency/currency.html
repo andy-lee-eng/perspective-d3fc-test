@@ -21,26 +21,20 @@
     <script src="../d3fc.plugin.js"></script>
 
     <script src="../perspective.js"></script>
+    <script src="currency.js"></script>
 
-    <link rel='stylesheet' href="../index.css">
-    <link rel='stylesheet' href="../material.dark.css" is="custom-style">
-
-    <title>Small CSV</title>
+    <link rel='stylesheet' href="currency.css">
+    <!-- <link rel='stylesheet' href="material.dark.css" is="custom-style">     -->
+    <link rel='stylesheet' href="../material.css" is="custom-style">
 </head>
 
 <body>
 
-    <perspective-viewer id='perspective-viewer' view='d3_y_bar' columns='["LatD"]' row-pivots='["State"]'
-        column-pivots='["City"]' sort='[["LatD", "desc"]]'>
+    <perspective-viewer view="d3_y_bar" row-pivots="[&quot;Date&quot;]" column-pivots="[]"
+        filters="[[&quot;Date&quot;,&quot;>=&quot;,&quot;2018-01-01&quot;]]" sort="[]"
+        columns="[&quot;USD&quot;,&quot;EUR&quot;]"
+        aggregates="{&quot;Date&quot;:&quot;any&quot;,&quot;EUR&quot;:&quot;high&quot;,&quot;USD&quot;:&quot;high&quot;}">
     </perspective-viewer>
-
-    <script>
-        const psp = document.getElementById("perspective-viewer");
-        psp.toggleConfig && psp.toggleConfig();
-        fetch("../data/small.csv")
-            .then(res => res.text())
-            .then(text => psp.load(text));
-    </script>
 
 </body>
 
