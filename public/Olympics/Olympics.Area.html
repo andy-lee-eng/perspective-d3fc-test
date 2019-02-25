@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+    <script src="../perspective.view.js"></script>
+    <script src="../hypergrid.plugin.js"></script>
+    <script src="../highcharts.plugin.js"></script>
+    <script src="../d3fc.plugin.js"></script>
+
+    <script src="../perspective.js"></script>
+
+    <link rel='stylesheet' href="../material.css" is="custom-style">
+
+    <link rel='stylesheet' href="Olympics.css">
+    <script src="Olympics.js"></script>
+</head>
+
+<body>
+
+    <div id="container">
+
+        <perspective-viewer view='d3_y_area' row-pivots='["year"]' column-pivots='["country"]'
+            filters='[["country","in",["United States","Great Britain"]]]' columns='["gold"]'>
+        </perspective-viewer>
+
+        <perspective-viewer view='y_area' row-pivots='["year"]' column-pivots='["country"]'
+            filters='[["country","in",["United States","Great Britain"]]]' columns='["gold"]'>
+        </perspective-viewer>
+    </div>
+
+</body>
+
+</html>
