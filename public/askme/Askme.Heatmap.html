@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+    <script src="../perspective.view.js"></script>
+    <script src="../hypergrid.plugin.js"></script>
+    <script src="../highcharts.plugin.js"></script>
+    <script src="../d3fc.plugin.js"></script>
+
+    <script src="../perspective.js"></script>
+
+    <link rel='stylesheet' href="../material.css" is="custom-style">
+
+    <style>
+        .example-chart {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    </style>
+
+    <title>Perspective D3FC Test</title>
+</head>
+
+<body>
+
+    <perspective-viewer class="example-chart" view="d3_heatmap" row-pivots='["year"]' column-pivots='["category"]'
+        sort='[["category", "col desc"]]' columns='["n"]'>
+
+    </perspective-viewer>
+
+    <script>
+        window.addEventListener('WebComponentsReady', function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '../data/askmefi_category_year.tsv', true);
+            xhr.onload = function () {
+                var el = document.getElementsByTagName('perspective-viewer')[0];
+                el.load(xhr.response);
+                //                el.toggleConfig();
+            }
+            xhr.send(null);
+        });
+    </script>
+
+</body>
+
+</html>
