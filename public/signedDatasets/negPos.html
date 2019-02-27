@@ -1,0 +1,47 @@
+<!--
+   
+   Copyright (c) 2017, the Perspective Authors.
+   
+   This file is part of the Perspective library, distributed under the terms of
+   the Apache License 2.0.  The full license can be found in the LICENSE file.
+
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+    <script src="../perspective.view.js"></script>
+    <script src="../hypergrid.plugin.js"></script>
+    <script src="../highcharts.plugin.js"></script>
+    <script src="../d3fc.plugin.js"></script>
+
+    <script src="../perspective.js"></script>
+
+    <link rel='stylesheet' href="../index.css">
+    <link rel='stylesheet' href="../material.dark.css" is="custom-style">
+
+    <title>Negative through Positive Values</title>
+</head>
+
+<body>
+
+    <perspective-viewer id='perspective-viewer' view='d3_xy_scatter' columns='["LatD", "LatM"]' row-pivots='["State"]'
+        column-pivots='["State"]' sort='[["LatD", "desc"]]'>
+    </perspective-viewer>
+
+    <script>
+        const psp = document.getElementById("perspective-viewer");
+        psp.toggleConfig && psp.toggleConfig();
+        fetch("./negPos.csv")
+            .then(res => res.text())
+            .then(text => psp.load(text));
+    </script>
+
+</body>
+
+</html>
