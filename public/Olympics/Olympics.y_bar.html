@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+    <script src="../perspective.view.js"></script>
+    <script src="../hypergrid.plugin.js"></script>
+    <script src="../highcharts.plugin.js"></script>
+    <script src="../d3fc.plugin.js"></script>
+
+    <script src="../perspective.js"></script>
+
+    <link rel='stylesheet' href="../material.css" is="custom-style">
+
+    <style>
+        .example-chart {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    </style>
+    <script src="Olympics.js"></script>
+</head>
+
+<body>
+
+    <div id="container">
+
+        <perspective-viewer class="example-chart" view='d3_y_bar' row-pivots='["year","country","sport"]'
+            column-pivots='[]'
+            filters='[["country","in",["United States","Great Britain"]],["year","!=",2002],["year","!=",2006],["year","!=",2010]]'
+            columns='["total"]'>
+        </perspective-viewer>
+    </div>
+
+</body>
+
+</html>
