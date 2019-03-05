@@ -22,6 +22,12 @@
  * the Apache License 2.0.  The full license can be found in the LICENSE file.
  *
  */
+@import url("https://fonts.googleapis.com/css?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+@import url("https://fonts.googleapis.com/css?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
 perspective-viewer {
   --interface--font-family: "Open Sans";
   --interface-monospace--font-family: "Roboto Mono";
@@ -82,37 +88,6 @@ perspective-viewer {
   --hypergrid--font-family: "Open Sans";
   --hypergrid-header--font-family: "Open Sans";
 }
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v15/mem8YaGs126MiZpBA-UFVZ0e.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/materialicons/v42/flUhRq6tzZclQEJ-Vdg-IuiaDsNZ.ttf) format('truetype');
-}
-.material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-}
-@font-face {
-  font-family: 'Roboto Mono';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Roboto Mono'), local('RobotoMono-Regular'), url(https://fonts.gstatic.com/s/robotomono/v5/L0x5DF4xlVMF-BfR8bXMIjhLq3o.ttf) format('truetype');
-}
 perspective-viewer {
   background-color: #2a2c2f;
   color: #cfd8dc;
@@ -148,6 +123,7 @@ perspective-viewer {
   --highcharts-tooltip--background: #2a2c2f;
   --d3fc-legend-text: #bbbbbb;
   --d3fc-axis--ticks: #bbbbbb;
+  --d3fc-axis--lines: #555555;
   --d3fc-tooltip--background: #333333;
   --d3fc-tooltip--color: #cfd8dc;
   --highcharts-heatmap-gradient-full: linear-gradient(#feeb65 0%, #e4521b 22.5%, #4d342f 42.5%, #222222 50%, #1a237e 57.5%, #42b3d5 67.5%, #dcedc8 100%);

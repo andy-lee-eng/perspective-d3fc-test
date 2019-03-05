@@ -36,11 +36,20 @@ From the `perspective-d3fc-test` project, link the local version of `perspective
 
 Open a Command window at the root of the `perspective` project, and run:
 
-    .\node_modules\.bin\lerna.cmd run --scope  @jpmorganchase/perspective-viewer-d3fc watch
+    cd packages/perspective-viewer-d3fc
+
+For the initial setup, run the `focus` command to install local dependencies (press enter a few times to accept the suggested versions).
+You may also need to have `webpack` installed globally.
+
+    yarn global add webpack
+    yarn install --focus
+
+Now run the `watch` command to live-compile the code.
+
+    yarn watch
 
 ### Run the test project
 
 From a second Command window, in the `perspective-d3fc-test` project, run:
 
     npm run start
-
