@@ -38,10 +38,9 @@ Open a Command window at the root of the `perspective` project, and run:
 
     cd packages/perspective-viewer-d3fc
 
-For the initial setup, run the `focus` command to install local dependencies (press enter a few times to accept the suggested versions).
-You may also need to have `webpack` installed globally.
+For the initial setup, run the `focus` command to install local dependencies.
+When it asks which version of wepback to install, pick version "3.5.6". The press enter to accept the default versions of the remaining dependencies.
 
-    yarn global add webpack
     yarn install --focus
 
 Now run the `watch` command to live-compile the code.
