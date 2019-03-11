@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
+    "startLocal": "node serverLocalPerspecBuild.js" ,
     "build:theme": "lessc ../perspective/packages/perspective-viewer/src/themes/material.dark.less ./public/material.dark.css"
   },
   "author": "",
