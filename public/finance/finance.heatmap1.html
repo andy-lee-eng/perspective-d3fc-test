@@ -32,13 +32,9 @@
 
     <div id="container">
 
-
-
-        <perspective-viewer class="example-chart" view="d3_xy_scatter_canvas"
-            columns='[" Discounts "," Profit ","  Sales ","Units Sold"]'
-            aggregates='{" Discount Band ":"distinct count"," Month Name ":"distinct count"," Product ":"distinct count","Country":"distinct count","Segment":"distinct count","Date":"distinct count"," Manufacturing Price ":"avg"," Sale Price ":"mean","Month Number":"sum","Year":"sum","  Sales ":"sum"," COGS ":"sum"," Discounts ":"avg"," Gross Sales ":"sum"," Profit ":"sum","Units Sold":"sum"}'
-            row-pivots='[" Product "]' column-pivots='["Segment"]'
-            filters='[[" Discounts ","<=",5000],[" Discounts ",">=",200]]' sort='[]' render_time="5.050000007031485">
+        <perspective-viewer class="example-chart" view="d3_heatmap" columns='[" Profit "]'
+            aggregates='{" Discount Band ":"distinct count"," Month Name ":"distinct count"," Product ":"distinct count","Country":"distinct count","Segment":"distinct count","Date":"distinct count"," Manufacturing Price ":"sum"," Sale Price ":"sum","Month Number":"sum","Year":"sum","  Sales ":"sum"," COGS ":"sum"," Discounts ":"sum"," Gross Sales ":"sum"," Profit ":"sum","Units Sold":"sum"}'
+            row-pivots='["Date"]' column-pivots='["Country"]' filters='[["Date",">","2014-01-01"]]' sort='[]'>
 
         </perspective-viewer>
 
