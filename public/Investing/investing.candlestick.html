@@ -32,8 +32,8 @@
 
     <div id="container">
 
-        <perspective-viewer class="example-chart" view="d3_candlestick" row-pivots='["Date"]' column-pivots='[]' filters='[]'
-            sort='[]' columns='["Open","High","Low","Price"]'
+        <perspective-viewer class="example-chart" view="d3_candlestick" row-pivots='["Date"]' column-pivots='[]'
+            filters='[]' sort='[]' columns='["Open","Price","High","Low"]'
             aggregates='{"Date":"distinct count","Change%":"sum","High":"sum","Low":"sum","Open":"sum","Price":"sum","Vol.":"sum"}'>
 
         </perspective-viewer>
