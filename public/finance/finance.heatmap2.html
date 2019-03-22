@@ -16,12 +16,18 @@
     <link rel='stylesheet' href="../material.css" is="custom-style">
 
     <style>
-        .example-chart {
+        #container {
             position: absolute;
             top: 0;
+            bottom: 0;
             left: 0;
             right: 0;
-            bottom: 0;
+            display: grid;
+            grid-template-rows: 1fr;
+            grid-template-columns: 75% 25%;
+            grid-row-gap: 3px;
+            grid-column-gap: 3px;
+            background-color: #ccc;
         }
     </style>
 
@@ -32,14 +38,32 @@
 
     <div id="container">
 
-        <perspective-viewer class="example-chart" view="d3_heatmap" columns='[" Profit "]'
+        <perspective-viewer id="d3Heatmap" view="d3_heatmap" columns='[" Profit "]'
             aggregates='{" Discount Band ":"distinct count"," Month Name ":"distinct count"," Product ":"distinct count","Country":"distinct count","Segment":"distinct count","Date":"distinct count"," Manufacturing Price ":"sum"," Sale Price ":"sum","Month Number":"sum","Year":"sum","  Sales ":"sum"," COGS ":"sum"," Discounts ":"sum"," Gross Sales ":"sum"," Profit ":"sum","Units Sold":"sum"}'
             row-pivots='["Year","Month Number"]' column-pivots='["Country"]' filters='[["Date",">","2014-01-01"]]'
             sort='[]'>
 
         </perspective-viewer>
 
+        <perspective-viewer id="d3YBar" view="d3_y_bar" columns='[" Profit "," Gross Sales ","Units Sold"]'
+            aggregates='{" Discount Band ":"distinct count"," Month Name ":"distinct count"," Product ":"distinct count","Country":"distinct count","Segment":"distinct count","Date":"distinct count"," Manufacturing Price ":"sum"," Sale Price ":"sum","Month Number":"sum","Year":"sum","  Sales ":"sum"," COGS ":"sum"," Discounts ":"sum"," Gross Sales ":"sum"," Profit ":"sum","Units Sold":"sum"}'
+            row-pivots='["Country","Year","Month Number"]' column-pivots='[]' filters='[]' sort='[]'>
+
+        </perspective-viewer>
     </div>
+
+    <script>
+        const d3Heatmap = document.querySelector('#d3Heatmap');
+        const d3YBar = document.querySelector('#d3YBar');
+
+        d3Heatmap.addEventListener("perspective-click", function (event) {
+            console.log("Event from d3Heatmap", event.detail);
+
+            d3YBar.restore(event.detail.config);
+        });
+
+
+    </script>
 </body>
 
 </html>

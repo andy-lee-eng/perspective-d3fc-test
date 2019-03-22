@@ -13,8 +13,9 @@ window.addEventListener("WebComponentsReady", function () {
     xhr.open('GET', url, true);
     xhr.onload = function () {
         var table = perspective.worker().table(xhr.response);
-        var elem = document.getElementsByTagName("perspective-viewer")[0];
-        elem.load(table);
+        for (var el of document.getElementsByTagName('perspective-viewer')) {
+            el.load(table);
+        }
     }
 
     xhr.send(null);
