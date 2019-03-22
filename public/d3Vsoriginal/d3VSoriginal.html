@@ -23,38 +23,61 @@
 
     <div id="container">
 
-        <perspective-viewer view="y_bar" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
+        <perspective-viewer id="hcBar" view="y_bar" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
             sort='[["gold","desc"]]'>
 
         </perspective-viewer>
 
-        <perspective-viewer view="d3_y_bar" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
+        <perspective-viewer id="d3Bar" view="d3_y_bar" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
             sort='[["gold","desc"]]'>
 
         </perspective-viewer>
 
-        <perspective-viewer view='y_bar' row-pivots='["year"]' filters='[["country","==","United States"]]'
+        <perspective-viewer id="hcGroupedBar" view='y_bar' row-pivots='["year"]' filters='[["country","==","United States"]]'
             columns='["gold","silver","bronze"]'>
 
         </perspective-viewer>
 
 
-        <perspective-viewer view='d3_y_bar' row-pivots='["year"]' filters='[["country","==","United States"]]'
+        <perspective-viewer id="d3GroupedBar" view='d3_y_bar' row-pivots='["year"]' filters='[["country","==","United States"]]'
             columns='["gold","silver","bronze"]'>
 
         </perspective-viewer>
 
-        <perspective-viewer view='y_bar' row-pivots='["year"]' column-pivots='["sport"]'
+        <perspective-viewer id="hcStackedBar" view='y_bar' row-pivots='["year"]' column-pivots='["sport"]'
             filters='[["country","==","United States"],["year",">",2008]]' columns='["gold"]'>
 
         </perspective-viewer>
 
-        <perspective-viewer view='d3_y_bar' row-pivots='["year"]' column-pivots='["sport"]'
+        <perspective-viewer id="d3StackedBar" view='d3_y_bar' row-pivots='["year"]' column-pivots='["sport"]'
             filters='[["country","==","United States"],["year",">",2008]]' columns='["gold"]'>
 
         </perspective-viewer>
 
     </div>
+
+    <script>
+        const hcBar = document.querySelector('#hcBar');
+        const hcGroupedBar = document.querySelector('#hcGroupedBar');
+        const hcStackedBar = document.querySelector('#hcStackedBar');
+        const d3Bar = document.querySelector('#d3Bar');
+        const d3GroupedBar = document.querySelector('#d3GroupedBar');
+        const d3StackedBar = document.querySelector('#d3StackedBar');
+
+        hcBar.addEventListener("perspective-click", function(event) {
+            console.log("Event from hcBar", event.detail);
+
+            hcGroupedBar.restore(event.detail.config);
+            hcStackedBar.restore(event.detail.config);
+        });
+
+        d3Bar.addEventListener("perspective-click", function(event) {
+            console.log("Event from d3Bar", event.detail);
+
+            d3GroupedBar.restore(event.detail.config);
+            d3StackedBar.restore(event.detail.config);
+        });
+    </script>
 
 </body>
 
