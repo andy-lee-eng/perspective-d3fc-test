@@ -32,7 +32,7 @@
 
     <perspective-viewer view="d3_heatmap" row-pivots='["Date"]' column-pivots="[]"
         filters='[["Date",">=","2018-01-01"]]' sort="[]" columns='["subtract:(USD, EUR)"]'
-        aggregates='{"Date":"any","EUR":"high","USD":"high","subtract(USD, EUR)":"sum"}' class
+        aggregates='{"Date":"any","EUR":"high","USD":"high","subtract:(USD, EUR)":"sum"}' class
         computed-columns='[{"name":"subtract:(USD, EUR)", "inputs":["USD","EUR"],"func":"subtract"}]'>
     </perspective-viewer>
 
