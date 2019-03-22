@@ -23,33 +23,33 @@
 
     <div id="container">
 
-        <perspective-viewer view="y_scatter" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
+        <perspective-viewer id="hcScatter" view="y_scatter" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
             sort='[["gold","desc"]]'>
 
         </perspective-viewer>
 
-        <perspective-viewer view="d3_y_scatter" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
+        <perspective-viewer id="d3Scatter" view="d3_y_scatter" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
             sort='[["gold","desc"]]'>
 
         </perspective-viewer>
 
-        <perspective-viewer view='y_scatter' row-pivots='["year"]' filters='[["country","==","United States"]]'
+        <perspective-viewer id="hcGroupedScatter" view='y_scatter' row-pivots='["year"]' filters='[["country","==","United States"]]'
             columns='["gold","silver","bronze"]'>
 
         </perspective-viewer>
 
 
-        <perspective-viewer view='d3_y_scatter' row-pivots='["year"]' filters='[["country","==","United States"]]'
+        <perspective-viewer id="d3GroupedScatter" view='d3_y_scatter' row-pivots='["year"]' filters='[["country","==","United States"]]'
             columns='["gold","silver","bronze"]'>
 
         </perspective-viewer>
 
-        <perspective-viewer view='y_scatter' row-pivots='["year"]' column-pivots='["sport"]'
+        <perspective-viewer id="hcStackedScatter" view='y_scatter' row-pivots='["year"]' column-pivots='["sport"]'
             filters='[["country","==","United States"],["year","!=",2002],["year","!=",2006],["year","!=",2010]]'
             columns='["total"]'>
         </perspective-viewer>
 
-        <perspective-viewer view='d3_y_scatter' row-pivots='["year"]' column-pivots='["sport"]'
+        <perspective-viewer id="d3StackedScatter" view='d3_y_scatter' row-pivots='["year"]' column-pivots='["sport"]'
             filters='[["country","==","United States"],["year","!=",2002],["year","!=",2006],["year","!=",2010]]'
             columns='["total"]'>
 
@@ -57,6 +57,29 @@
 
     </div>
 
+    <script>
+        const hcScatter = document.querySelector('#hcScatter');
+        const hcGroupedScatter = document.querySelector('#hcGroupedScatter');
+        const hcStackedScatter = document.querySelector('#hcStackedScatter');
+        const d3Scatter = document.querySelector('#d3Scatter');
+        const d3GroupedScatter = document.querySelector('#d3GroupedScatter');
+        const d3StackedScatter = document.querySelector('#d3StackedScatter');
+
+        hcScatter.addEventListener("perspective-click", function(event) {
+            console.log("Event from hcScatter", event.detail);
+
+            hcGroupedScatter.restore(event.detail.config);
+            hcStackedScatter.restore(event.detail.config);
+        });
+
+        d3Scatter.addEventListener("perspective-click", function(event) {
+            console.log("Event from d3Scatter", event.detail);
+
+            d3GroupedScatter.restore(event.detail.config);
+            d3StackedScatter.restore(event.detail.config);
+        });
+    </script>
+    
 </body>
 
 </html>

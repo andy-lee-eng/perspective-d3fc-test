@@ -23,33 +23,33 @@
 
     <div id="container">
 
-        <perspective-viewer view="y_line" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
+        <perspective-viewer id="hcLine" view="y_line" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
             sort='[["gold","desc"]]'>
 
         </perspective-viewer>
 
-        <perspective-viewer view="d3_y_line" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
+        <perspective-viewer id="d3Line" view="d3_y_line" row-pivots='["country"]' filters='[["gold",">",1]]' columns='["gold"]'
             sort='[["gold","desc"]]'>
 
         </perspective-viewer>
 
-        <perspective-viewer view='y_line' row-pivots='["year"]' filters='[["country","==","United States"]]'
+        <perspective-viewer id="hcGroupedLine" view='y_line' row-pivots='["year"]' filters='[["country","==","United States"]]'
             columns='["gold","silver","bronze"]'>
 
         </perspective-viewer>
 
 
-        <perspective-viewer view='d3_y_line' row-pivots='["year"]' filters='[["country","==","United States"]]'
+        <perspective-viewer id="d3GroupedLine" view='d3_y_line' row-pivots='["year"]' filters='[["country","==","United States"]]'
             columns='["gold","silver","bronze"]'>
 
         </perspective-viewer>
 
-        <perspective-viewer view='y_line' row-pivots='["year"]' column-pivots='["sport"]'
+        <perspective-viewer id="hcStackedLine" view='y_line' row-pivots='["year"]' column-pivots='["sport"]'
             filters='[["country","==","United States"],["year","!=",2002],["year","!=",2006],["year","!=",2010]]'
             columns='["total"]'>
         </perspective-viewer>
 
-        <perspective-viewer view='d3_y_line' row-pivots='["year"]' column-pivots='["sport"]'
+        <perspective-viewer id="d3StackedLine" view='d3_y_line' row-pivots='["year"]' column-pivots='["sport"]'
             filters='[["country","==","United States"],["year","!=",2002],["year","!=",2006],["year","!=",2010]]'
             columns='["total"]'>
 
@@ -57,6 +57,29 @@
 
     </div>
 
+    <script>
+        const hcLine = document.querySelector('#hcLine');
+        const hcGroupedLine = document.querySelector('#hcGroupedLine');
+        const hcStackedLine = document.querySelector('#hcStackedLine');
+        const d3Line = document.querySelector('#d3Line');
+        const d3GroupedLine = document.querySelector('#d3GroupedLine');
+        const d3StackedLine = document.querySelector('#d3StackedLine');
+
+        hcLine.addEventListener("perspective-click", function(event) {
+            console.log("Event from hcLine", event.detail);
+
+            hcGroupedLine.restore(event.detail.config);
+            hcStackedLine.restore(event.detail.config);
+        });
+
+        d3Line.addEventListener("perspective-click", function(event) {
+            console.log("Event from d3Line", event.detail);
+
+            d3GroupedLine.restore(event.detail.config);
+            d3StackedLine.restore(event.detail.config);
+        });
+    </script>
+   
 </body>
 
 </html>
