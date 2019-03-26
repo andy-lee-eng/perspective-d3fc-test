@@ -16,3 +16,9 @@
 perspective-viewer {
     overflow: hidden;
 }
+
+perspective-viewer.medal-colors {
+    --d3fc-series-1: #FFD700;
+    --d3fc-series-2: #C0C0C0;
+    --d3fc-series-3: #cd7f32;
+}
