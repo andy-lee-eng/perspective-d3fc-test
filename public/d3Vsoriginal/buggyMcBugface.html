@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+    <script src="../perspective.view.js"></script>
+    <script src="../hypergrid.plugin.js"></script>
+    <script src="../highcharts.plugin.js"></script>
+    <script src="../d3fc.plugin.js"></script>
+
+    <script src="../perspective.js"></script>
+    <script src="d3VSoriginal.js"></script>
+
+    <link rel='stylesheet' href="d3VSoriginal.css">
+    <link rel='stylesheet' href="../material.dark.css" is="custom-style">
+</head>
+
+<body>
+
+    <div id="container">
+
+        <perspective-viewer view='d3_y_bar' row-pivots='["year"]' column-pivots='["sport"]' filters='[["country","==","United States"]]'
+            columns='["gold","silver","bronze"]'>
+
+        </perspective-viewer>
+
+        <perspective-viewer view='d3_y_bar' row-pivots='["year"]' column-pivots='["sport"]'
+            filters='[["country","==","United States"],["year",">",2008]]' columns='["gold"]'>
+
+        </perspective-viewer>
+
+    </div>
+
+</body>
+
+</html>

@@ -5,9 +5,8 @@
     left: 0;
     right: 0;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    /* grid-template-rows: 1fr; */
-    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-row-gap: 3px;
     grid-column-gap: 3px;
     background-color: #ccc;

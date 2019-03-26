@@ -3,7 +3,8 @@ const websocket = require('websocket');
 const model = require('./model');
 
 const webSocketServer = websocket.server;
-const webSocketServerPort = 1337;
+//const webSocketServerPort = 1337;
+const webSocketServerPort = 56607;
 const clients = [];
 const orgs = ["GOOG", "MSFT", "TSLA", "SPOT", "APPL", "NFLX", "HULU", "AAZN", "BLZD"];
 const freshPrices = () => {
