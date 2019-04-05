@@ -75,7 +75,7 @@
  perspective-viewer {
    background-color: #E0F0FF;
    color: #1A237E;
-   --plugin--background: #E0F0FF;
+   --plugin--background: #F0F0F0;
    --column-drop-label--color: #666;
    --column--border-color: #3b3f46;
    --column-drop-target--background: #B3E5FC;
@@ -105,13 +105,13 @@
    --highcharts-rect--opacity: 0.85;
    --highcharts-grid-line--stroke: #3b3f46;
    --highcharts-tooltip--background: #2a2c2f;
-   --d3fc-legend--text: #4DD0E1;
+   --d3fc-legend--text: #0D47A1;
    --d3fc-sunburst--labels: #4DD0E1;
    --d3fc-axis--ticks: #0D47A1;
    --d3fc-axis--lines: #4DD0E1;
    --d3fc-tooltip--background: #E0F0FF;
    --d3fc-tooltip--color: #1A237E;
-   --d3fc-series: #0D47A1;
+   --d3fc-series: rgba(13, 71, 161, 0.5);
    --d3fc-series-1: #42A5F5;
    --d3fc-series-2: #66BB6A;
    --d3fc-series-3: #AB47BC;

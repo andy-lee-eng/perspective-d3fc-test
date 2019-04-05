@@ -1,4 +1,4 @@
-const themes = window["theme-toggle-themes"] || [{color: "white", files: ["material"]}, {color: "black", files: ["material.dark"]}, {color: "#0D47A1", files: ["material.blue"]}, {color: "red", files: ["material.red"]}];
+const themes = window["theme-toggle-themes"] || [{color: "white", files: ["material"]}, {color: "black", files: ["material.dark"]}, {color: "#0D47A1", files: ["material.blue"]}, {color: "#b71c1c", files: ["material.red"]}, {color: "#2E7D32", files: ["material.green"]}];
 
 let themeIndex = 0;
 themes.forEach((theme, index) => {

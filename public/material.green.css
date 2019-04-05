@@ -73,8 +73,8 @@
    --hypergrid-header--font-family: "Open Sans";
  }
  perspective-viewer {
-   background-color: #FFF0E0;
-   color: #b71c1c;
+   background-color: #F0FFE0;
+   color: #2E7D32;
    --plugin--background: #F0F0F0;
    --column-drop-label--color: #666;
    --column--border-color: #3b3f46;
@@ -85,10 +85,10 @@
    --psp-text-field--border-color: #22a0ce;
    --button-hover--color: #22a0ce;
    --hypergrid-tree-header--background: #B3E5FC;
-   --hypergrid-tree-header--color: #b71c1c;
+   --hypergrid-tree-header--color: #2E7D32;
    --hypergrid-header--background: #B3E5FC;
-   --hypergrid-separator--color: #b71c1c;
-   --hypergrid-header--color: #b71c1c;
+   --hypergrid-separator--color: #2E7D32;
+   --hypergrid-header--color: #2E7D32;
    --hypergrid-positive--color: #22a0ce;
    --hypergrid-negative--color: #ff8888;
    --hypergrid-positive--background: #B3E5FC;
@@ -98,20 +98,20 @@
    --hypergrid--font-family: "Open Sans";
    --hypergrid-header--font-family: "Open Sans";
    --hypergrid-row-hover--background: #555;
-   --hypergrid-row-hover--color: #b71c1c;
+   --hypergrid-row-hover--color: #2E7D32;
    --hypergrid-cell-hover--background: #444;
-   --hypergrid-cell-hover--color: #b71c1c;
+   --hypergrid-cell-hover--color: #2E7D32;
    --highcharts-label--fill: #cfd8dc;
    --highcharts-rect--opacity: 0.85;
    --highcharts-grid-line--stroke: #3b3f46;
    --highcharts-tooltip--background: #2a2c2f;
-   --d3fc-legend--text: #e53935;
+   --d3fc-legend--text: #66BB6A;
    --d3fc-sunburst--labels: #ef9a9a;
-   --d3fc-axis--ticks: #e53935;
-   --d3fc-axis--lines: #ef9a9a;
+   --d3fc-axis--ticks: #66BB6A;
+   --d3fc-axis--lines: #A5D6A7;
    --d3fc-tooltip--background: #FFF0E0;
-   --d3fc-tooltip--color: #b71c1c;
-   --d3fc-series: rgba(229, 57, 53, 0.5);
+   --d3fc-tooltip--color: #2E7D32;
+   --d3fc-series: rgba(67, 160, 71, 0.5);
    --d3fc-series-1: #f44336;
    --d3fc-series-2: #66BB6A;
    --d3fc-series-3: #AB47BC;
