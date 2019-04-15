@@ -1,92 +1,94 @@
-const themes = window["theme-toggle-themes"] || [{color: "white", files: ["material"]}, {color: "black", files: ["material.dark"]}, {color: "#0D47A1", files: ["material.blue"]}, {color: "#b71c1c", files: ["material.red"]}, {color: "#2E7D32", files: ["material.green"]}];
+(function() {
+    const themes = window["theme-toggle-themes"] || [{color: "white", files: ["material"]}, {color: "black", files: ["material.dark"]}, {color: "#0D47A1", files: ["material.blue"]}, {color: "#b71c1c", files: ["material.red"]}, {color: "#2E7D32", files: ["material.green"]}];
 
-let themeIndex = 0;
-themes.forEach((theme, index) => {
-    if (theme.files.length && hasStylesheet(theme.files[0])) {
-        themeIndex = index;
-    }
-});
-const nextThemeIndex = () => (themeIndex >= themes.length - 1 ? 0 : themeIndex + 1);
-const thisTheme = () => themes[themeIndex];
-const nextTheme = () => themes[nextThemeIndex()];
-
-const header = document.getElementsByTagName("head")[0];
-const style = document.createElement("style");
-style.innerHTML = `
-    .theme-toggle {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 20px;
-        height: 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-`;
-header.appendChild(style);
-
-const toggleButton = document.createElement("button");
-toggleButton.className = "theme-toggle";
-toggleButton.addEventListener("click", () => {
-    thisTheme().files.forEach(removeStylesheet);
-    themeIndex = nextThemeIndex();
-    Promise.all(thisTheme().files.map(addStylesheet)).then(refreshView);
-});
-styleButton();
-
-document.body.appendChild(toggleButton);
-
-function addStylesheet(name) {
-    return new Promise(resolve => {
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = `/${name}.css`;
-        link.is = "custom-style";
-        link.onload = () => resolve();
-        header.appendChild(link);
+    let themeIndex = 0;
+    themes.forEach((theme, index) => {
+        if (theme.files.length && hasStylesheet(theme.files[0])) {
+            themeIndex = index;
+        }
     });
-}
+    const nextThemeIndex = () => (themeIndex >= themes.length - 1 ? 0 : themeIndex + 1);
+    const thisTheme = () => themes[themeIndex];
+    const nextTheme = () => themes[nextThemeIndex()];
 
-function removeStylesheet(name) {
-    const links = document.getElementsByTagName("link");
-    for (let n = 0; n < links.length; n++) {
-        const link = links[n];
-        if (link.href.endsWith(`${name}.css`)) {
-            header.removeChild(link);
+    const header = document.getElementsByTagName("head")[0];
+    const style = document.createElement("style");
+    style.innerHTML = `
+        .theme-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
-    }
-}
+    `;
+    header.appendChild(style);
 
-function refreshView() {
-    const viewers = document.getElementsByTagName("perspective-viewer");
-    for (let n = 0; n < viewers.length; n++) {
-        const viewer = viewers[n];
-        viewer.restore({});
-    }
+    const toggleButton = document.createElement("button");
+    toggleButton.className = "theme-toggle";
+    toggleButton.addEventListener("click", () => {
+        thisTheme().files.forEach(removeStylesheet);
+        themeIndex = nextThemeIndex();
+        Promise.all(thisTheme().files.map(addStylesheet)).then(refreshView);
+    });
     styleButton();
-}
 
-function styleButton() {
-    toggleButton.style.backgroundColor = nextTheme().color;
-}
+    document.body.appendChild(toggleButton);
 
-function hasStylesheet(name) {
-    const links = document.getElementsByTagName("link");
-    for (let n = 0; n < links.length; n++) {
-        const link = links[n];
-        if (link.href.endsWith(`${name}.css`)) {
-            return true;
+    function addStylesheet(name) {
+        return new Promise(resolve => {
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = `/${name}.css`;
+            link.is = "custom-style";
+            link.onload = () => resolve();
+            header.appendChild(link);
+        });
+    }
+
+    function removeStylesheet(name) {
+        const links = document.getElementsByTagName("link");
+        for (let n = 0; n < links.length; n++) {
+            const link = links[n];
+            if (link.href.endsWith(`${name}.css`)) {
+                header.removeChild(link);
+            }
         }
     }
-    return false;
-}
 
-if (!String.prototype.endsWith) {
-    String.prototype.endsWith = function(search, this_len) {
-        if (this_len === undefined || this_len > this.length) {
-            this_len = this.length;
+    function refreshView() {
+        const viewers = document.getElementsByTagName("perspective-viewer");
+        for (let n = 0; n < viewers.length; n++) {
+            const viewer = viewers[n];
+            viewer.restore({});
         }
-        return this.substring(this_len - search.length, this_len) === search;
-    };
-}
+        styleButton();
+    }
+
+    function styleButton() {
+        toggleButton.style.backgroundColor = nextTheme().color;
+    }
+
+    function hasStylesheet(name) {
+        const links = document.getElementsByTagName("link");
+        for (let n = 0; n < links.length; n++) {
+            const link = links[n];
+            if (link.href.endsWith(`${name}.css`)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    if (!String.prototype.endsWith) {
+        String.prototype.endsWith = function(search, this_len) {
+            if (this_len === undefined || this_len > this.length) {
+                this_len = this.length;
+            }
+            return this.substring(this_len - search.length, this_len) === search;
+        };
+    }
+})();
