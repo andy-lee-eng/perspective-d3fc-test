@@ -39,7 +39,7 @@
 
 <body>
 
-    <perspective-viewer class="example-chart" view="d3_y_bar" row-pivots='["Category", "Sub-Category"]' column-pivots='["Region"]' sort='[["Profit", "desc"]]' columns='["Sales"]'>
+    <perspective-viewer class="example-chart" view="d3_y_bar" row-pivots='["Category", "Sub-Category"]' column-pivots='["Region"]' sort='[["Profit", "desc"]]' columns='["Profit", "Sales"]'>
 
     </perspective-viewer>
 
@@ -55,8 +55,13 @@
             }
             xhr.send(null);
         });
+        document.querySelector('.example-chart')
+            .addEventListener("perspective-click", function(event) {
+                console.log("Event from chart", event.detail);
+            });
     </script>
-
+    <script src="../theme-toggle.js"></script>
+    <script src="../save-restore.js"></script>
 </body>
 
 </html>

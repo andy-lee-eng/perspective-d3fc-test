@@ -11,7 +11,7 @@ If the path is different, then update the relative scripts in `package.json`
 
 ### Build custom version of material.dark theme
 
-    npm run build:theme
+    yarn build:theme
 
 ### Link the d3fc plugin project
 
