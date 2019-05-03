@@ -167,7 +167,7 @@
     "@d3fc/d3fc-rebind" "^5.0.6"
     d3-array "^1.0.0"
 
-"@finos/perspective-viewer-d3fc@^0.3.0-rc.1":
+"@finos/perspective-viewer-d3fc@latest":
   version "0.3.0-rc.1"
   resolved "https://registry.yarnpkg.com/@finos/perspective-viewer-d3fc/-/perspective-viewer-d3fc-0.3.0-rc.1.tgz#98e43d4985a25c1b263af729ad29edff8b06fa57"
   integrity sha512-jLdP2Q7RlgxY2ZvCOzHX5es9YrxvF2vump9kTsJbmqXwRe2qbaetAzRPyHywwKt5eKsU8npPrN2w6X8JjSbrVg==
@@ -181,7 +181,7 @@
     d3fc "^14.0.34"
     gradient-parser "0.1.5"
 
-"@finos/perspective-viewer-highcharts@^0.3.0-rc.1":
+"@finos/perspective-viewer-highcharts@latest":
   version "0.3.0-rc.1"
   resolved "https://registry.yarnpkg.com/@finos/perspective-viewer-highcharts/-/perspective-viewer-highcharts-0.3.0-rc.1.tgz#56ceca102bcd96833827c60c5c836afed6b764dc"
   integrity sha512-a0hEZwt/FTvvkZrS9aEVYWe6ta7gUsz3gxfZKpQN89ERDIJyWiNCX7piZ90PAyEn0AGtGN8+eKQ8yN3p7td4Fg==
@@ -196,7 +196,7 @@
     highcharts-grouped-categories "1.1.2"
     highcharts-more "^0.1.2"
 
-"@finos/perspective-viewer-hypergrid@^0.3.0-rc.1":
+"@finos/perspective-viewer-hypergrid@latest":
   version "0.3.0-rc.1"
   resolved "https://registry.yarnpkg.com/@finos/perspective-viewer-hypergrid/-/perspective-viewer-hypergrid-0.3.0-rc.1.tgz#71633d80f100e6f23e63542a93c5f2917aa1f102"
   integrity sha512-ZEYSUach9IV1DucifjFoXXplh5+IryAZAlvph7NU2z6cgco5okhsqu7IEyhYwdcGwlNXPHg/fBU231rR57DRNA==
@@ -211,7 +211,7 @@
     rectangular "1.0.1"
     superscript-number "^1.0.0"
 
-"@finos/perspective-viewer@^0.3.0-rc.1":
+"@finos/perspective-viewer@^0.3.0-rc.1", "@finos/perspective-viewer@latest":
   version "0.3.0-rc.1"
   resolved "https://registry.yarnpkg.com/@finos/perspective-viewer/-/perspective-viewer-0.3.0-rc.1.tgz#e076093d7e80cd58f6adc34bf9086619859ff83d"
   integrity sha512-DAodKdAPDAm3pekbzEnllzib3HY94RYOKJzmixK6ywJp4ohznsCRXnK24zrKXf/u1hgRQ1RuHUi0Q124EnZuvA==
@@ -226,7 +226,7 @@
     lodash "^4.17.4"
     mobile-drag-drop "^2.2.0"
 
-"@finos/perspective@^0.3.0-rc.1":
+"@finos/perspective@^0.3.0-rc.1", "@finos/perspective@latest":
   version "0.3.0-rc.1"
   resolved "https://registry.yarnpkg.com/@finos/perspective/-/perspective-0.3.0-rc.1.tgz#e4c6cf8d68de524d044b85a4bd8d6056619e9bb9"
   integrity sha512-EnlnFGvA6MEa7zh88LQ5Au+KlKyKSe1DNvUmo206rynMGHP17Xe5dZXWL2SXf73Hjz8fbNemmqIn5cwQGm4o2g==
