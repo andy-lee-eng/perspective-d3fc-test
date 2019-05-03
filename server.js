@@ -5,7 +5,7 @@ const app = express();
 const port = 3001;
 const wsServer = require('./socketServer'); 
 
-const perspectivePath = "node_modules/@jpmorganchase";
+const perspectivePath = "node_modules/@finos";
 const perspectiveComponents = [
   { path: `perspective-viewer/build/perspective.view.js`, map: true },
   { path: `perspective-viewer-hypergrid/build/hypergrid.plugin.js`, map: true },
